@@ -1,0 +1,2116 @@
+Terminals unused in grammar
+
+   DQ_MARK
+   EXC_MARK
+   COMMENT
+   NULL_T
+   COMMA
+   LOGICAL_AND
+   LOGICAL_OR
+   MOD
+   GLOBAL_T
+
+
+State 0 conflicts: 17 shift/reduce
+State 3 conflicts: 1 shift/reduce
+State 19 conflicts: 17 shift/reduce, 1 reduce/reduce
+State 21 conflicts: 16 shift/reduce, 18 reduce/reduce
+State 22 conflicts: 1 shift/reduce
+State 24 conflicts: 1 shift/reduce
+State 32 conflicts: 1 shift/reduce
+State 45 conflicts: 1 shift/reduce
+State 53 conflicts: 16 shift/reduce, 18 reduce/reduce
+State 54 conflicts: 1 shift/reduce
+State 73 conflicts: 2 reduce/reduce
+State 84 conflicts: 1 shift/reduce
+State 85 conflicts: 1 shift/reduce
+State 86 conflicts: 1 shift/reduce
+State 87 conflicts: 1 shift/reduce
+State 88 conflicts: 1 shift/reduce
+State 89 conflicts: 1 shift/reduce
+State 104 conflicts: 1 shift/reduce
+State 105 conflicts: 1 shift/reduce
+State 108 conflicts: 17 shift/reduce
+State 115 conflicts: 17 shift/reduce
+State 116 conflicts: 1 shift/reduce
+State 117 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 125 conflicts: 1 shift/reduce
+State 127 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 129 conflicts: 1 shift/reduce
+State 137 conflicts: 1 shift/reduce
+State 139 conflicts: 1 shift/reduce
+State 143 conflicts: 1 shift/reduce
+State 144 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: statement_list
+
+    2 statement_list: statement_list lines
+    3               | lines
+    4               | statement_list function_definition_list
+    5               | function_definition_list
+
+    6 line: switchLines
+    7     | math_statement
+    8     | assign_statement SEMICOLON
+    9     | bool_statement
+   10     | while_statement
+   11     | if_statement
+   12     | for_statement
+   13     | return_statement SEMICOLON
+   14     | break_statement
+   15     | continue_statement
+   16     | PRINT_T LP IDENTIFIER RP SEMICOLON
+   17     | "hello msg"
+   18     | error '\n'
+
+   19 lines: line
+   20      | lines line
+
+   21 function_definition_list: function_definition
+   22                         | function_definition_list function_definition
+
+   23 assign_statement: IDENTIFIER ASSIGN math_statement
+   24                 | IDENTIFIER ASSIGN STR_VAL
+   25                 | IDENTIFIER ASSIGN function_employ
+   26                 | IDENTIFIER ASSIGN bool_statement
+   27                 | IDENTIFIER INCREASE
+   28                 | IDENTIFIER DECREASE
+
+   29 math_statement: NUM
+   30               | IDENTIFIER
+   31               | function_employ
+   32               | math_statement ADD math_statement
+   33               | math_statement SUB math_statement
+   34               | math_statement MUL math_statement
+   35               | math_statement DIV math_statement
+   36               | LP math_statement RP
+   37               | SUB math_statement
+
+   38 bool_statement: TRUE_T
+   39               | FALSE_T
+   40               | math_statement GT math_statement
+   41               | math_statement LT math_statement
+   42               | math_statement EQ math_statement
+   43               | math_statement GE math_statement
+   44               | math_statement LE math_statement
+   45               | math_statement NE math_statement
+
+   46 TypeForParam: INT_TYPE
+   47             | FLOAT_TYPE
+   48             | DOUBLE_TYPE
+   49             | BOOL_TYPE
+   50             | STRING_TYPE
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines block
+   52                    | FUNCTION IDENTIFIER LP RP block
+
+   53 function_employ: IDENTIFIER LP math_statement RP
+   54                | IDENTIFIER LP bool_statement RP
+
+   55 return_statement: RETURN_T math_statement
+   56                 | RETURN_T bool_statement
+
+   57 if_statement: IF LP bool_statement RP switchLines block
+   58             | IF LP bool_statement RP switchLines block switchLines ELSE switchLines block
+   59             | IF LP bool_statement RP switchLines block switchLines elsif_list
+   60             | IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines block
+
+   61 elsif_list: elsif
+   62           | elsif_list elsif
+
+   63 elsif: ELSIF LP bool_statement RP switchLines block switchLines
+
+   64 while_statement: WHILE LP bool_statement RP switchLines block
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
+
+   66 switchLines: switchLines '\n'
+   67            | '\n'
+   68            | %empty
+
+   69 block: LC lines RC
+   70      | LC RC
+
+   71 break_statement: BREAK SEMICOLON
+
+   72 continue_statement: CONTINUE SEMICOLON
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 18 66 67
+error (256) 18
+NUM (258) 29
+STR_VAL (259) 24
+IDENTIFIER (260) 16 23 24 25 26 27 28 30 51 52 53 54
+"hello msg" (261) 17
+INT_TYPE (262) 46
+FLOAT_TYPE (263) 47
+DOUBLE_TYPE (264) 48
+BOOL_TYPE (265) 49
+STRING_TYPE (266) 50
+DQ_MARK (267)
+EXC_MARK (268)
+INCREASE (269) 27
+DECREASE (270) 28
+PRINT_T (271) 16
+COMMENT (272)
+FUNCTION (273) 51 52
+IF (274) 57 58 59 60
+ELSE (275) 58 60
+ELSIF (276) 63
+WHILE (277) 64
+FOR (278) 65
+RETURN_T (279) 55 56
+BREAK (280) 71
+CONTINUE (281) 72
+NULL_T (282)
+LC (283) 69 70
+RC (284) 69 70
+SEMICOLON (285) 8 13 16 65 71 72
+COMMA (286)
+ASSIGN (287) 23 24 25 26
+LOGICAL_AND (288)
+LOGICAL_OR (289)
+EQ (290) 42
+NE (291) 45
+GT (292) 40
+GE (293) 43
+LT (294) 41
+LE (295) 44
+MOD (296)
+TRUE_T (297) 38
+FALSE_T (298) 39
+GLOBAL_T (299)
+SUB (300) 33 37
+ADD (301) 32
+MUL (302) 34
+DIV (303) 35
+LP (304) 16 36 51 52 53 54 57 58 59 60 63 64 65
+RP (305) 16 36 51 52 53 54 57 58 59 60 63 64 65
+
+
+Nonterminals, with rules where they appear
+
+$accept (52)
+    on left: 0
+program (53)
+    on left: 1, on right: 0
+statement_list (54)
+    on left: 2 3 4 5, on right: 1 2 4
+line (55)
+    on left: 6 7 8 9 10 11 12 13 14 15 16 17 18, on right: 19 20
+lines (56)
+    on left: 19 20, on right: 2 3 20 69
+function_definition_list (57)
+    on left: 21 22, on right: 4 5 22
+assign_statement (58)
+    on left: 23 24 25 26 27 28, on right: 8 65
+math_statement (59)
+    on left: 29 30 31 32 33 34 35 36 37, on right: 7 23 32 33 34 35
+    36 37 40 41 42 43 44 45 53 55
+bool_statement (60)
+    on left: 38 39 40 41 42 43 44 45, on right: 9 26 54 56 57 58 59
+    60 63 64 65
+TypeForParam (61)
+    on left: 46 47 48 49 50, on right: 51
+function_definition (62)
+    on left: 51 52, on right: 21 22
+function_employ (63)
+    on left: 53 54, on right: 25 31
+return_statement (64)
+    on left: 55 56, on right: 13
+if_statement (65)
+    on left: 57 58 59 60, on right: 11
+elsif_list (66)
+    on left: 61 62, on right: 59 60 62
+elsif (67)
+    on left: 63, on right: 61 62
+while_statement (68)
+    on left: 64, on right: 10
+for_statement (69)
+    on left: 65, on right: 12
+switchLines (70)
+    on left: 66 67 68, on right: 6 51 57 58 59 60 63 64 65 66
+block (71)
+    on left: 69 70, on right: 51 52 57 58 59 60 63 64 65
+break_statement (72)
+    on left: 71, on right: 14
+continue_statement (73)
+    on left: 72, on right: 15
+
+
+State 0
+
+    0 $accept: . program $end
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    FUNCTION     shift, and go to state 6
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    $end         reduce using rule 68 (switchLines)
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    FUNCTION     [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    program                   go to state 18
+    statement_list            go to state 19
+    line                      go to state 20
+    lines                     go to state 21
+    function_definition_list  go to state 22
+    assign_statement          go to state 23
+    math_statement            go to state 24
+    bool_statement            go to state 25
+    function_definition       go to state 26
+    function_employ           go to state 27
+    return_statement          go to state 28
+    if_statement              go to state 29
+    while_statement           go to state 30
+    for_statement             go to state 31
+    switchLines               go to state 32
+    break_statement           go to state 33
+    continue_statement        go to state 34
+
+
+State 1
+
+   18 line: error . '\n'
+
+    '\n'  shift, and go to state 35
+
+
+State 2
+
+   29 math_statement: NUM .
+
+    $default  reduce using rule 29 (math_statement)
+
+
+State 3
+
+   23 assign_statement: IDENTIFIER . ASSIGN math_statement
+   24                 | IDENTIFIER . ASSIGN STR_VAL
+   25                 | IDENTIFIER . ASSIGN function_employ
+   26                 | IDENTIFIER . ASSIGN bool_statement
+   27                 | IDENTIFIER . INCREASE
+   28                 | IDENTIFIER . DECREASE
+   30 math_statement: IDENTIFIER .
+   53 function_employ: IDENTIFIER . LP math_statement RP
+   54                | IDENTIFIER . LP bool_statement RP
+
+    INCREASE  shift, and go to state 36
+    DECREASE  shift, and go to state 37
+    ASSIGN    shift, and go to state 38
+    LP        shift, and go to state 39
+
+    LP        [reduce using rule 30 (math_statement)]
+    $default  reduce using rule 30 (math_statement)
+
+
+State 4
+
+   17 line: "hello msg" .
+
+    $default  reduce using rule 17 (line)
+
+
+State 5
+
+   16 line: PRINT_T . LP IDENTIFIER RP SEMICOLON
+
+    LP  shift, and go to state 40
+
+
+State 6
+
+   51 function_definition: FUNCTION . IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines block
+   52                    | FUNCTION . IDENTIFIER LP RP block
+
+    IDENTIFIER  shift, and go to state 41
+
+
+State 7
+
+   57 if_statement: IF . LP bool_statement RP switchLines block
+   58             | IF . LP bool_statement RP switchLines block switchLines ELSE switchLines block
+   59             | IF . LP bool_statement RP switchLines block switchLines elsif_list
+   60             | IF . LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines block
+
+    LP  shift, and go to state 42
+
+
+State 8
+
+   64 while_statement: WHILE . LP bool_statement RP switchLines block
+
+    LP  shift, and go to state 43
+
+
+State 9
+
+   65 for_statement: FOR . LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
+
+    LP  shift, and go to state 44
+
+
+State 10
+
+   55 return_statement: RETURN_T . math_statement
+   56                 | RETURN_T . bool_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 46
+    bool_statement   go to state 47
+    function_employ  go to state 27
+
+
+State 11
+
+   71 break_statement: BREAK . SEMICOLON
+
+    SEMICOLON  shift, and go to state 48
+
+
+State 12
+
+   72 continue_statement: CONTINUE . SEMICOLON
+
+    SEMICOLON  shift, and go to state 49
+
+
+State 13
+
+   38 bool_statement: TRUE_T .
+
+    $default  reduce using rule 38 (bool_statement)
+
+
+State 14
+
+   39 bool_statement: FALSE_T .
+
+    $default  reduce using rule 39 (bool_statement)
+
+
+State 15
+
+   37 math_statement: SUB . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 50
+    function_employ  go to state 27
+
+
+State 16
+
+   36 math_statement: LP . math_statement RP
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 51
+    function_employ  go to state 27
+
+
+State 17
+
+   67 switchLines: '\n' .
+
+    $default  reduce using rule 67 (switchLines)
+
+
+State 18
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 52
+
+
+State 19
+
+    1 program: statement_list .
+    2 statement_list: statement_list . lines
+    4               | statement_list . function_definition_list
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    FUNCTION     shift, and go to state 6
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    $end         reduce using rule 1 (program)
+    $end         [reduce using rule 68 (switchLines)]
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    FUNCTION     [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    line                      go to state 20
+    lines                     go to state 53
+    function_definition_list  go to state 54
+    assign_statement          go to state 23
+    math_statement            go to state 24
+    bool_statement            go to state 25
+    function_definition       go to state 26
+    function_employ           go to state 27
+    return_statement          go to state 28
+    if_statement              go to state 29
+    while_statement           go to state 30
+    for_statement             go to state 31
+    switchLines               go to state 32
+    break_statement           go to state 33
+    continue_statement        go to state 34
+
+
+State 20
+
+   19 lines: line .
+
+    $default  reduce using rule 19 (lines)
+
+
+State 21
+
+    3 statement_list: lines .
+   20 lines: lines . line
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    $end         reduce using rule 3 (statement_list)
+    $end         [reduce using rule 68 (switchLines)]
+    error        [reduce using rule 3 (statement_list)]
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 3 (statement_list)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 3 (statement_list)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 3 (statement_list)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 3 (statement_list)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    FUNCTION     reduce using rule 3 (statement_list)
+    FUNCTION     [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 3 (statement_list)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 3 (statement_list)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 3 (statement_list)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 3 (statement_list)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 3 (statement_list)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 3 (statement_list)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 3 (statement_list)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 3 (statement_list)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 3 (statement_list)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 3 (statement_list)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 3 (statement_list)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    line                go to state 55
+    assign_statement    go to state 23
+    math_statement      go to state 24
+    bool_statement      go to state 25
+    function_employ     go to state 27
+    return_statement    go to state 28
+    if_statement        go to state 29
+    while_statement     go to state 30
+    for_statement       go to state 31
+    switchLines         go to state 32
+    break_statement     go to state 33
+    continue_statement  go to state 34
+
+
+State 22
+
+    5 statement_list: function_definition_list .
+   22 function_definition_list: function_definition_list . function_definition
+
+    FUNCTION  shift, and go to state 6
+
+    FUNCTION  [reduce using rule 5 (statement_list)]
+    $default  reduce using rule 5 (statement_list)
+
+    function_definition  go to state 56
+
+
+State 23
+
+    8 line: assign_statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 57
+
+
+State 24
+
+    7 line: math_statement .
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement . GT math_statement
+   41               | math_statement . LT math_statement
+   42               | math_statement . EQ math_statement
+   43               | math_statement . GE math_statement
+   44               | math_statement . LE math_statement
+   45               | math_statement . NE math_statement
+
+    EQ   shift, and go to state 58
+    NE   shift, and go to state 59
+    GT   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    LE   shift, and go to state 63
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 7 (line)]
+    $default  reduce using rule 7 (line)
+
+
+State 25
+
+    9 line: bool_statement .
+
+    $default  reduce using rule 9 (line)
+
+
+State 26
+
+   21 function_definition_list: function_definition .
+
+    $default  reduce using rule 21 (function_definition_list)
+
+
+State 27
+
+   31 math_statement: function_employ .
+
+    $default  reduce using rule 31 (math_statement)
+
+
+State 28
+
+   13 line: return_statement . SEMICOLON
+
+    SEMICOLON  shift, and go to state 68
+
+
+State 29
+
+   11 line: if_statement .
+
+    $default  reduce using rule 11 (line)
+
+
+State 30
+
+   10 line: while_statement .
+
+    $default  reduce using rule 10 (line)
+
+
+State 31
+
+   12 line: for_statement .
+
+    $default  reduce using rule 12 (line)
+
+
+State 32
+
+    6 line: switchLines .
+   66 switchLines: switchLines . '\n'
+
+    '\n'  shift, and go to state 69
+
+    '\n'      [reduce using rule 6 (line)]
+    $default  reduce using rule 6 (line)
+
+
+State 33
+
+   14 line: break_statement .
+
+    $default  reduce using rule 14 (line)
+
+
+State 34
+
+   15 line: continue_statement .
+
+    $default  reduce using rule 15 (line)
+
+
+State 35
+
+   18 line: error '\n' .
+
+    $default  reduce using rule 18 (line)
+
+
+State 36
+
+   27 assign_statement: IDENTIFIER INCREASE .
+
+    $default  reduce using rule 27 (assign_statement)
+
+
+State 37
+
+   28 assign_statement: IDENTIFIER DECREASE .
+
+    $default  reduce using rule 28 (assign_statement)
+
+
+State 38
+
+   23 assign_statement: IDENTIFIER ASSIGN . math_statement
+   24                 | IDENTIFIER ASSIGN . STR_VAL
+   25                 | IDENTIFIER ASSIGN . function_employ
+   26                 | IDENTIFIER ASSIGN . bool_statement
+
+    NUM         shift, and go to state 2
+    STR_VAL     shift, and go to state 70
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 71
+    bool_statement   go to state 72
+    function_employ  go to state 73
+
+
+State 39
+
+   53 function_employ: IDENTIFIER LP . math_statement RP
+   54                | IDENTIFIER LP . bool_statement RP
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 74
+    bool_statement   go to state 75
+    function_employ  go to state 27
+
+
+State 40
+
+   16 line: PRINT_T LP . IDENTIFIER RP SEMICOLON
+
+    IDENTIFIER  shift, and go to state 76
+
+
+State 41
+
+   51 function_definition: FUNCTION IDENTIFIER . LP TypeForParam IDENTIFIER RP switchLines block
+   52                    | FUNCTION IDENTIFIER . LP RP block
+
+    LP  shift, and go to state 77
+
+
+State 42
+
+   57 if_statement: IF LP . bool_statement RP switchLines block
+   58             | IF LP . bool_statement RP switchLines block switchLines ELSE switchLines block
+   59             | IF LP . bool_statement RP switchLines block switchLines elsif_list
+   60             | IF LP . bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines block
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 78
+    bool_statement   go to state 79
+    function_employ  go to state 27
+
+
+State 43
+
+   64 while_statement: WHILE LP . bool_statement RP switchLines block
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 78
+    bool_statement   go to state 80
+    function_employ  go to state 27
+
+
+State 44
+
+   65 for_statement: FOR LP . assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
+
+    IDENTIFIER  shift, and go to state 81
+
+    assign_statement  go to state 82
+
+
+State 45
+
+   30 math_statement: IDENTIFIER .
+   53 function_employ: IDENTIFIER . LP math_statement RP
+   54                | IDENTIFIER . LP bool_statement RP
+
+    LP  shift, and go to state 39
+
+    LP        [reduce using rule 30 (math_statement)]
+    $default  reduce using rule 30 (math_statement)
+
+
+State 46
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement . GT math_statement
+   41               | math_statement . LT math_statement
+   42               | math_statement . EQ math_statement
+   43               | math_statement . GE math_statement
+   44               | math_statement . LE math_statement
+   45               | math_statement . NE math_statement
+   55 return_statement: RETURN_T math_statement .
+
+    EQ   shift, and go to state 58
+    NE   shift, and go to state 59
+    GT   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    LE   shift, and go to state 63
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    $default  reduce using rule 55 (return_statement)
+
+
+State 47
+
+   56 return_statement: RETURN_T bool_statement .
+
+    $default  reduce using rule 56 (return_statement)
+
+
+State 48
+
+   71 break_statement: BREAK SEMICOLON .
+
+    $default  reduce using rule 71 (break_statement)
+
+
+State 49
+
+   72 continue_statement: CONTINUE SEMICOLON .
+
+    $default  reduce using rule 72 (continue_statement)
+
+
+State 50
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   37               | SUB math_statement .
+
+    $default  reduce using rule 37 (math_statement)
+
+
+State 51
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   36               | LP math_statement . RP
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+    RP   shift, and go to state 83
+
+
+State 52
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 53
+
+    2 statement_list: statement_list lines .
+   20 lines: lines . line
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    $end         reduce using rule 2 (statement_list)
+    $end         [reduce using rule 68 (switchLines)]
+    error        [reduce using rule 2 (statement_list)]
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 2 (statement_list)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 2 (statement_list)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 2 (statement_list)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 2 (statement_list)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    FUNCTION     reduce using rule 2 (statement_list)
+    FUNCTION     [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 2 (statement_list)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 2 (statement_list)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 2 (statement_list)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 2 (statement_list)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 2 (statement_list)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 2 (statement_list)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 2 (statement_list)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 2 (statement_list)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 2 (statement_list)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 2 (statement_list)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 2 (statement_list)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    line                go to state 55
+    assign_statement    go to state 23
+    math_statement      go to state 24
+    bool_statement      go to state 25
+    function_employ     go to state 27
+    return_statement    go to state 28
+    if_statement        go to state 29
+    while_statement     go to state 30
+    for_statement       go to state 31
+    switchLines         go to state 32
+    break_statement     go to state 33
+    continue_statement  go to state 34
+
+
+State 54
+
+    4 statement_list: statement_list function_definition_list .
+   22 function_definition_list: function_definition_list . function_definition
+
+    FUNCTION  shift, and go to state 6
+
+    FUNCTION  [reduce using rule 4 (statement_list)]
+    $default  reduce using rule 4 (statement_list)
+
+    function_definition  go to state 56
+
+
+State 55
+
+   20 lines: lines line .
+
+    $default  reduce using rule 20 (lines)
+
+
+State 56
+
+   22 function_definition_list: function_definition_list function_definition .
+
+    $default  reduce using rule 22 (function_definition_list)
+
+
+State 57
+
+    8 line: assign_statement SEMICOLON .
+
+    $default  reduce using rule 8 (line)
+
+
+State 58
+
+   42 bool_statement: math_statement EQ . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 84
+    function_employ  go to state 27
+
+
+State 59
+
+   45 bool_statement: math_statement NE . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 85
+    function_employ  go to state 27
+
+
+State 60
+
+   40 bool_statement: math_statement GT . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 86
+    function_employ  go to state 27
+
+
+State 61
+
+   43 bool_statement: math_statement GE . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 87
+    function_employ  go to state 27
+
+
+State 62
+
+   41 bool_statement: math_statement LT . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 88
+    function_employ  go to state 27
+
+
+State 63
+
+   44 bool_statement: math_statement LE . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 89
+    function_employ  go to state 27
+
+
+State 64
+
+   33 math_statement: math_statement SUB . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 90
+    function_employ  go to state 27
+
+
+State 65
+
+   32 math_statement: math_statement ADD . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 91
+    function_employ  go to state 27
+
+
+State 66
+
+   34 math_statement: math_statement MUL . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 92
+    function_employ  go to state 27
+
+
+State 67
+
+   35 math_statement: math_statement DIV . math_statement
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 93
+    function_employ  go to state 27
+
+
+State 68
+
+   13 line: return_statement SEMICOLON .
+
+    $default  reduce using rule 13 (line)
+
+
+State 69
+
+   66 switchLines: switchLines '\n' .
+
+    $default  reduce using rule 66 (switchLines)
+
+
+State 70
+
+   24 assign_statement: IDENTIFIER ASSIGN STR_VAL .
+
+    $default  reduce using rule 24 (assign_statement)
+
+
+State 71
+
+   23 assign_statement: IDENTIFIER ASSIGN math_statement .
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement . GT math_statement
+   41               | math_statement . LT math_statement
+   42               | math_statement . EQ math_statement
+   43               | math_statement . GE math_statement
+   44               | math_statement . LE math_statement
+   45               | math_statement . NE math_statement
+
+    EQ   shift, and go to state 58
+    NE   shift, and go to state 59
+    GT   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    LE   shift, and go to state 63
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    $default  reduce using rule 23 (assign_statement)
+
+
+State 72
+
+   26 assign_statement: IDENTIFIER ASSIGN bool_statement .
+
+    $default  reduce using rule 26 (assign_statement)
+
+
+State 73
+
+   25 assign_statement: IDENTIFIER ASSIGN function_employ .
+   31 math_statement: function_employ .
+
+    SEMICOLON  reduce using rule 25 (assign_statement)
+    SEMICOLON  [reduce using rule 31 (math_statement)]
+    RP         reduce using rule 25 (assign_statement)
+    RP         [reduce using rule 31 (math_statement)]
+    $default   reduce using rule 31 (math_statement)
+
+
+State 74
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement . GT math_statement
+   41               | math_statement . LT math_statement
+   42               | math_statement . EQ math_statement
+   43               | math_statement . GE math_statement
+   44               | math_statement . LE math_statement
+   45               | math_statement . NE math_statement
+   53 function_employ: IDENTIFIER LP math_statement . RP
+
+    EQ   shift, and go to state 58
+    NE   shift, and go to state 59
+    GT   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    LE   shift, and go to state 63
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+    RP   shift, and go to state 94
+
+
+State 75
+
+   54 function_employ: IDENTIFIER LP bool_statement . RP
+
+    RP  shift, and go to state 95
+
+
+State 76
+
+   16 line: PRINT_T LP IDENTIFIER . RP SEMICOLON
+
+    RP  shift, and go to state 96
+
+
+State 77
+
+   51 function_definition: FUNCTION IDENTIFIER LP . TypeForParam IDENTIFIER RP switchLines block
+   52                    | FUNCTION IDENTIFIER LP . RP block
+
+    INT_TYPE     shift, and go to state 97
+    FLOAT_TYPE   shift, and go to state 98
+    DOUBLE_TYPE  shift, and go to state 99
+    BOOL_TYPE    shift, and go to state 100
+    STRING_TYPE  shift, and go to state 101
+    RP           shift, and go to state 102
+
+    TypeForParam  go to state 103
+
+
+State 78
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement . GT math_statement
+   41               | math_statement . LT math_statement
+   42               | math_statement . EQ math_statement
+   43               | math_statement . GE math_statement
+   44               | math_statement . LE math_statement
+   45               | math_statement . NE math_statement
+
+    EQ   shift, and go to state 58
+    NE   shift, and go to state 59
+    GT   shift, and go to state 60
+    GE   shift, and go to state 61
+    LT   shift, and go to state 62
+    LE   shift, and go to state 63
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+
+State 79
+
+   57 if_statement: IF LP bool_statement . RP switchLines block
+   58             | IF LP bool_statement . RP switchLines block switchLines ELSE switchLines block
+   59             | IF LP bool_statement . RP switchLines block switchLines elsif_list
+   60             | IF LP bool_statement . RP switchLines block switchLines elsif_list switchLines ELSE switchLines block
+
+    RP  shift, and go to state 104
+
+
+State 80
+
+   64 while_statement: WHILE LP bool_statement . RP switchLines block
+
+    RP  shift, and go to state 105
+
+
+State 81
+
+   23 assign_statement: IDENTIFIER . ASSIGN math_statement
+   24                 | IDENTIFIER . ASSIGN STR_VAL
+   25                 | IDENTIFIER . ASSIGN function_employ
+   26                 | IDENTIFIER . ASSIGN bool_statement
+   27                 | IDENTIFIER . INCREASE
+   28                 | IDENTIFIER . DECREASE
+
+    INCREASE  shift, and go to state 36
+    DECREASE  shift, and go to state 37
+    ASSIGN    shift, and go to state 38
+
+
+State 82
+
+   65 for_statement: FOR LP assign_statement . SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
+
+    SEMICOLON  shift, and go to state 106
+
+
+State 83
+
+   36 math_statement: LP math_statement RP .
+
+    $default  reduce using rule 36 (math_statement)
+
+
+State 84
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   42 bool_statement: math_statement EQ math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 42 (bool_statement)]
+    $default  reduce using rule 42 (bool_statement)
+
+
+State 85
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   45 bool_statement: math_statement NE math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 45 (bool_statement)]
+    $default  reduce using rule 45 (bool_statement)
+
+
+State 86
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   40 bool_statement: math_statement GT math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 40 (bool_statement)]
+    $default  reduce using rule 40 (bool_statement)
+
+
+State 87
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   43 bool_statement: math_statement GE math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 43 (bool_statement)]
+    $default  reduce using rule 43 (bool_statement)
+
+
+State 88
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   41 bool_statement: math_statement LT math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 41 (bool_statement)]
+    $default  reduce using rule 41 (bool_statement)
+
+
+State 89
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   44 bool_statement: math_statement LE math_statement .
+
+    SUB  shift, and go to state 64
+    ADD  shift, and go to state 65
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    SUB       [reduce using rule 44 (bool_statement)]
+    $default  reduce using rule 44 (bool_statement)
+
+
+State 90
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   33               | math_statement SUB math_statement .
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    $default  reduce using rule 33 (math_statement)
+
+
+State 91
+
+   32 math_statement: math_statement . ADD math_statement
+   32               | math_statement ADD math_statement .
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+
+    MUL  shift, and go to state 66
+    DIV  shift, and go to state 67
+
+    $default  reduce using rule 32 (math_statement)
+
+
+State 92
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   34               | math_statement MUL math_statement .
+   35               | math_statement . DIV math_statement
+
+    $default  reduce using rule 34 (math_statement)
+
+
+State 93
+
+   32 math_statement: math_statement . ADD math_statement
+   33               | math_statement . SUB math_statement
+   34               | math_statement . MUL math_statement
+   35               | math_statement . DIV math_statement
+   35               | math_statement DIV math_statement .
+
+    $default  reduce using rule 35 (math_statement)
+
+
+State 94
+
+   53 function_employ: IDENTIFIER LP math_statement RP .
+
+    $default  reduce using rule 53 (function_employ)
+
+
+State 95
+
+   54 function_employ: IDENTIFIER LP bool_statement RP .
+
+    $default  reduce using rule 54 (function_employ)
+
+
+State 96
+
+   16 line: PRINT_T LP IDENTIFIER RP . SEMICOLON
+
+    SEMICOLON  shift, and go to state 107
+
+
+State 97
+
+   46 TypeForParam: INT_TYPE .
+
+    $default  reduce using rule 46 (TypeForParam)
+
+
+State 98
+
+   47 TypeForParam: FLOAT_TYPE .
+
+    $default  reduce using rule 47 (TypeForParam)
+
+
+State 99
+
+   48 TypeForParam: DOUBLE_TYPE .
+
+    $default  reduce using rule 48 (TypeForParam)
+
+
+State 100
+
+   49 TypeForParam: BOOL_TYPE .
+
+    $default  reduce using rule 49 (TypeForParam)
+
+
+State 101
+
+   50 TypeForParam: STRING_TYPE .
+
+    $default  reduce using rule 50 (TypeForParam)
+
+
+State 102
+
+   52 function_definition: FUNCTION IDENTIFIER LP RP . block
+
+    LC  shift, and go to state 108
+
+    block  go to state 109
+
+
+State 103
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam . IDENTIFIER RP switchLines block
+
+    IDENTIFIER  shift, and go to state 110
+
+
+State 104
+
+   57 if_statement: IF LP bool_statement RP . switchLines block
+   58             | IF LP bool_statement RP . switchLines block switchLines ELSE switchLines block
+   59             | IF LP bool_statement RP . switchLines block switchLines elsif_list
+   60             | IF LP bool_statement RP . switchLines block switchLines elsif_list switchLines ELSE switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 111
+
+
+State 105
+
+   64 while_statement: WHILE LP bool_statement RP . switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 112
+
+
+State 106
+
+   65 for_statement: FOR LP assign_statement SEMICOLON . bool_statement SEMICOLON assign_statement RP switchLines block
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 78
+    bool_statement   go to state 113
+    function_employ  go to state 27
+
+
+State 107
+
+   16 line: PRINT_T LP IDENTIFIER RP SEMICOLON .
+
+    $default  reduce using rule 16 (line)
+
+
+State 108
+
+   69 block: LC . lines RC
+   70      | LC . RC
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    RC           shift, and go to state 114
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    RC           [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    line                go to state 20
+    lines               go to state 115
+    assign_statement    go to state 23
+    math_statement      go to state 24
+    bool_statement      go to state 25
+    function_employ     go to state 27
+    return_statement    go to state 28
+    if_statement        go to state 29
+    while_statement     go to state 30
+    for_statement       go to state 31
+    switchLines         go to state 32
+    break_statement     go to state 33
+    continue_statement  go to state 34
+
+
+State 109
+
+   52 function_definition: FUNCTION IDENTIFIER LP RP block .
+
+    $default  reduce using rule 52 (function_definition)
+
+
+State 110
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER . RP switchLines block
+
+    RP  shift, and go to state 116
+
+
+State 111
+
+   57 if_statement: IF LP bool_statement RP switchLines . block
+   58             | IF LP bool_statement RP switchLines . block switchLines ELSE switchLines block
+   59             | IF LP bool_statement RP switchLines . block switchLines elsif_list
+   60             | IF LP bool_statement RP switchLines . block switchLines elsif_list switchLines ELSE switchLines block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 117
+
+
+State 112
+
+   64 while_statement: WHILE LP bool_statement RP switchLines . block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 118
+
+
+State 113
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement . SEMICOLON assign_statement RP switchLines block
+
+    SEMICOLON  shift, and go to state 119
+
+
+State 114
+
+   70 block: LC RC .
+
+    $default  reduce using rule 70 (block)
+
+
+State 115
+
+   20 lines: lines . line
+   69 block: LC lines . RC
+
+    error        shift, and go to state 1
+    NUM          shift, and go to state 2
+    IDENTIFIER   shift, and go to state 3
+    "hello msg"  shift, and go to state 4
+    PRINT_T      shift, and go to state 5
+    IF           shift, and go to state 7
+    WHILE        shift, and go to state 8
+    FOR          shift, and go to state 9
+    RETURN_T     shift, and go to state 10
+    BREAK        shift, and go to state 11
+    CONTINUE     shift, and go to state 12
+    RC           shift, and go to state 120
+    TRUE_T       shift, and go to state 13
+    FALSE_T      shift, and go to state 14
+    SUB          shift, and go to state 15
+    LP           shift, and go to state 16
+    '\n'         shift, and go to state 17
+
+    error        [reduce using rule 68 (switchLines)]
+    NUM          [reduce using rule 68 (switchLines)]
+    IDENTIFIER   [reduce using rule 68 (switchLines)]
+    "hello msg"  [reduce using rule 68 (switchLines)]
+    PRINT_T      [reduce using rule 68 (switchLines)]
+    IF           [reduce using rule 68 (switchLines)]
+    WHILE        [reduce using rule 68 (switchLines)]
+    FOR          [reduce using rule 68 (switchLines)]
+    RETURN_T     [reduce using rule 68 (switchLines)]
+    BREAK        [reduce using rule 68 (switchLines)]
+    CONTINUE     [reduce using rule 68 (switchLines)]
+    RC           [reduce using rule 68 (switchLines)]
+    TRUE_T       [reduce using rule 68 (switchLines)]
+    FALSE_T      [reduce using rule 68 (switchLines)]
+    SUB          [reduce using rule 68 (switchLines)]
+    LP           [reduce using rule 68 (switchLines)]
+    '\n'         [reduce using rule 68 (switchLines)]
+
+    line                go to state 55
+    assign_statement    go to state 23
+    math_statement      go to state 24
+    bool_statement      go to state 25
+    function_employ     go to state 27
+    return_statement    go to state 28
+    if_statement        go to state 29
+    while_statement     go to state 30
+    for_statement       go to state 31
+    switchLines         go to state 32
+    break_statement     go to state 33
+    continue_statement  go to state 34
+
+
+State 116
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP . switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 121
+
+
+State 117
+
+   57 if_statement: IF LP bool_statement RP switchLines block .
+   58             | IF LP bool_statement RP switchLines block . switchLines ELSE switchLines block
+   59             | IF LP bool_statement RP switchLines block . switchLines elsif_list
+   60             | IF LP bool_statement RP switchLines block . switchLines elsif_list switchLines ELSE switchLines block
+
+    '\n'  shift, and go to state 17
+
+    ELSE      reduce using rule 68 (switchLines)
+    ELSIF     reduce using rule 68 (switchLines)
+    '\n'      [reduce using rule 57 (if_statement)]
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 57 (if_statement)
+
+    switchLines  go to state 122
+
+
+State 118
+
+   64 while_statement: WHILE LP bool_statement RP switchLines block .
+
+    $default  reduce using rule 64 (while_statement)
+
+
+State 119
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON . assign_statement RP switchLines block
+
+    IDENTIFIER  shift, and go to state 81
+
+    assign_statement  go to state 123
+
+
+State 120
+
+   69 block: LC lines RC .
+
+    $default  reduce using rule 69 (block)
+
+
+State 121
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines . block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 124
+
+
+State 122
+
+   58 if_statement: IF LP bool_statement RP switchLines block switchLines . ELSE switchLines block
+   59             | IF LP bool_statement RP switchLines block switchLines . elsif_list
+   60             | IF LP bool_statement RP switchLines block switchLines . elsif_list switchLines ELSE switchLines block
+   66 switchLines: switchLines . '\n'
+
+    ELSE   shift, and go to state 125
+    ELSIF  shift, and go to state 126
+    '\n'   shift, and go to state 69
+
+    elsif_list  go to state 127
+    elsif       go to state 128
+
+
+State 123
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement . RP switchLines block
+
+    RP  shift, and go to state 129
+
+
+State 124
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines block .
+
+    $default  reduce using rule 51 (function_definition)
+
+
+State 125
+
+   58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE . switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 130
+
+
+State 126
+
+   63 elsif: ELSIF . LP bool_statement RP switchLines block switchLines
+
+    LP  shift, and go to state 131
+
+
+State 127
+
+   59 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list .
+   60             | IF LP bool_statement RP switchLines block switchLines elsif_list . switchLines ELSE switchLines block
+   62 elsif_list: elsif_list . elsif
+
+    ELSIF  shift, and go to state 126
+    '\n'   shift, and go to state 17
+
+    ELSE      reduce using rule 68 (switchLines)
+    '\n'      [reduce using rule 59 (if_statement)]
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 59 (if_statement)
+
+    elsif        go to state 132
+    switchLines  go to state 133
+
+
+State 128
+
+   61 elsif_list: elsif .
+
+    $default  reduce using rule 61 (elsif_list)
+
+
+State 129
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP . switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 134
+
+
+State 130
+
+   58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE switchLines . block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 135
+
+
+State 131
+
+   63 elsif: ELSIF LP . bool_statement RP switchLines block switchLines
+
+    NUM         shift, and go to state 2
+    IDENTIFIER  shift, and go to state 45
+    TRUE_T      shift, and go to state 13
+    FALSE_T     shift, and go to state 14
+    SUB         shift, and go to state 15
+    LP          shift, and go to state 16
+
+    math_statement   go to state 78
+    bool_statement   go to state 136
+    function_employ  go to state 27
+
+
+State 132
+
+   62 elsif_list: elsif_list elsif .
+
+    $default  reduce using rule 62 (elsif_list)
+
+
+State 133
+
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines . ELSE switchLines block
+   66 switchLines: switchLines . '\n'
+
+    ELSE  shift, and go to state 137
+    '\n'  shift, and go to state 69
+
+
+State 134
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines . block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 138
+
+
+State 135
+
+   58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE switchLines block .
+
+    $default  reduce using rule 58 (if_statement)
+
+
+State 136
+
+   63 elsif: ELSIF LP bool_statement . RP switchLines block switchLines
+
+    RP  shift, and go to state 139
+
+
+State 137
+
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE . switchLines block
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 140
+
+
+State 138
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block .
+
+    $default  reduce using rule 65 (for_statement)
+
+
+State 139
+
+   63 elsif: ELSIF LP bool_statement RP . switchLines block switchLines
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 141
+
+
+State 140
+
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines . block
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 142
+
+
+State 141
+
+   63 elsif: ELSIF LP bool_statement RP switchLines . block switchLines
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 108
+    '\n'  shift, and go to state 69
+
+    block  go to state 143
+
+
+State 142
+
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines block .
+
+    $default  reduce using rule 60 (if_statement)
+
+
+State 143
+
+   63 elsif: ELSIF LP bool_statement RP switchLines block . switchLines
+
+    '\n'  shift, and go to state 17
+
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 144
+
+
+State 144
+
+   63 elsif: ELSIF LP bool_statement RP switchLines block switchLines .
+   66 switchLines: switchLines . '\n'
+
+    '\n'  shift, and go to state 69
+
+    '\n'      [reduce using rule 63 (elsif)]
+    $default  reduce using rule 63 (elsif)

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="BisonFlex">
+      <UniqueIdentifier>{df54227b-c882-4b51-8e08-95e90eddab41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles">
+      <UniqueIdentifier>{54823670-e765-41a5-ac2e-76f8c17e3d8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles\HeaderFiles">
+      <UniqueIdentifier>{02054530-d276-4283-99d2-e0cbc2703333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedFiles\SourceFiles">
+      <UniqueIdentifier>{0e73700b-cf86-4409-a550-7d719462e8af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ReentrantApp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ScannerParserCL.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="analyzer.cpp">
+      <Filter>GeneratedFiles\SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="scanner.cpp">
+      <Filter>GeneratedFiles\SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MathExpression.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableMap.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AssignExpression.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DiyValue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateNode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="analyzer.y">
+      <Filter>BisonFlex</Filter>
+    </CustomBuild>
+    <CustomBuild Include="scanner.l">
+      <Filter>BisonFlex</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ScannerParserCL.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="scanner.h">
+      <Filter>GeneratedFiles\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="analyzer.h">
+      <Filter>GeneratedFiles\HeaderFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MathExpression.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableMap.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AssignExpression.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolExpression.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DiyValue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WhileLoop.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
