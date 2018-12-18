@@ -1,5 +1,5 @@
-a = 0;
-
+a = 0
+while()d
 function abc(int a){
 a=1;
 }

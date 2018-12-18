@@ -21,26 +21,26 @@ State 32 conflicts: 1 shift/reduce
 State 45 conflicts: 1 shift/reduce
 State 53 conflicts: 16 shift/reduce, 18 reduce/reduce
 State 54 conflicts: 1 shift/reduce
-State 73 conflicts: 2 reduce/reduce
-State 84 conflicts: 1 shift/reduce
+State 74 conflicts: 2 reduce/reduce
 State 85 conflicts: 1 shift/reduce
 State 86 conflicts: 1 shift/reduce
 State 87 conflicts: 1 shift/reduce
 State 88 conflicts: 1 shift/reduce
 State 89 conflicts: 1 shift/reduce
-State 104 conflicts: 1 shift/reduce
+State 90 conflicts: 1 shift/reduce
 State 105 conflicts: 1 shift/reduce
-State 108 conflicts: 17 shift/reduce
-State 115 conflicts: 17 shift/reduce
-State 116 conflicts: 1 shift/reduce
-State 117 conflicts: 1 shift/reduce, 1 reduce/reduce
-State 125 conflicts: 1 shift/reduce
-State 127 conflicts: 1 shift/reduce, 1 reduce/reduce
-State 129 conflicts: 1 shift/reduce
-State 137 conflicts: 1 shift/reduce
-State 139 conflicts: 1 shift/reduce
-State 143 conflicts: 1 shift/reduce
+State 106 conflicts: 1 shift/reduce
+State 109 conflicts: 17 shift/reduce
+State 116 conflicts: 17 shift/reduce
+State 117 conflicts: 1 shift/reduce
+State 118 conflicts: 1 shift/reduce
+State 126 conflicts: 1 shift/reduce
+State 128 conflicts: 1 shift/reduce
+State 130 conflicts: 1 shift/reduce
+State 138 conflicts: 1 shift/reduce
+State 140 conflicts: 1 shift/reduce
 State 144 conflicts: 1 shift/reduce
+State 145 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -59,7 +59,7 @@ Grammar
     8     | assign_statement SEMICOLON
     9     | bool_statement
    10     | while_statement
-   11     | if_statement
+   11     | if_statement SEMICOLON
    12     | for_statement
    13     | return_statement SEMICOLON
    14     | break_statement
@@ -173,7 +173,7 @@ CONTINUE (281) 72
 NULL_T (282)
 LC (283) 69 70
 RC (284) 69 70
-SEMICOLON (285) 8 13 16 65 71 72
+SEMICOLON (285) 8 11 13 16 65 71 72
 COMMA (286)
 ASSIGN (287) 23 24 25 26
 LOGICAL_AND (288)
@@ -692,9 +692,9 @@ State 28
 
 State 29
 
-   11 line: if_statement .
+   11 line: if_statement . SEMICOLON
 
-    $default  reduce using rule 11 (line)
+    SEMICOLON  shift, and go to state 69
 
 
 State 30
@@ -716,7 +716,7 @@ State 32
     6 line: switchLines .
    66 switchLines: switchLines . '\n'
 
-    '\n'  shift, and go to state 69
+    '\n'  shift, and go to state 70
 
     '\n'      [reduce using rule 6 (line)]
     $default  reduce using rule 6 (line)
@@ -765,16 +765,16 @@ State 38
    26                 | IDENTIFIER ASSIGN . bool_statement
 
     NUM         shift, and go to state 2
-    STR_VAL     shift, and go to state 70
+    STR_VAL     shift, and go to state 71
     IDENTIFIER  shift, and go to state 45
     TRUE_T      shift, and go to state 13
     FALSE_T     shift, and go to state 14
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 71
-    bool_statement   go to state 72
-    function_employ  go to state 73
+    math_statement   go to state 72
+    bool_statement   go to state 73
+    function_employ  go to state 74
 
 
 State 39
@@ -789,8 +789,8 @@ State 39
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 74
-    bool_statement   go to state 75
+    math_statement   go to state 75
+    bool_statement   go to state 76
     function_employ  go to state 27
 
 
@@ -798,7 +798,7 @@ State 40
 
    16 line: PRINT_T LP . IDENTIFIER RP SEMICOLON
 
-    IDENTIFIER  shift, and go to state 76
+    IDENTIFIER  shift, and go to state 77
 
 
 State 41
@@ -806,7 +806,7 @@ State 41
    51 function_definition: FUNCTION IDENTIFIER . LP TypeForParam IDENTIFIER RP switchLines block
    52                    | FUNCTION IDENTIFIER . LP RP block
 
-    LP  shift, and go to state 77
+    LP  shift, and go to state 78
 
 
 State 42
@@ -823,8 +823,8 @@ State 42
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 78
-    bool_statement   go to state 79
+    math_statement   go to state 79
+    bool_statement   go to state 80
     function_employ  go to state 27
 
 
@@ -839,8 +839,8 @@ State 43
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 78
-    bool_statement   go to state 80
+    math_statement   go to state 79
+    bool_statement   go to state 81
     function_employ  go to state 27
 
 
@@ -848,9 +848,9 @@ State 44
 
    65 for_statement: FOR LP . assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
 
-    IDENTIFIER  shift, and go to state 81
+    IDENTIFIER  shift, and go to state 82
 
-    assign_statement  go to state 82
+    assign_statement  go to state 83
 
 
 State 45
@@ -937,7 +937,7 @@ State 51
     ADD  shift, and go to state 65
     MUL  shift, and go to state 66
     DIV  shift, and go to state 67
-    RP   shift, and go to state 83
+    RP   shift, and go to state 84
 
 
 State 52
@@ -1063,7 +1063,7 @@ State 58
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 84
+    math_statement   go to state 85
     function_employ  go to state 27
 
 
@@ -1076,7 +1076,7 @@ State 59
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 85
+    math_statement   go to state 86
     function_employ  go to state 27
 
 
@@ -1089,7 +1089,7 @@ State 60
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 86
+    math_statement   go to state 87
     function_employ  go to state 27
 
 
@@ -1102,7 +1102,7 @@ State 61
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 87
+    math_statement   go to state 88
     function_employ  go to state 27
 
 
@@ -1115,7 +1115,7 @@ State 62
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 88
+    math_statement   go to state 89
     function_employ  go to state 27
 
 
@@ -1128,7 +1128,7 @@ State 63
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 89
+    math_statement   go to state 90
     function_employ  go to state 27
 
 
@@ -1141,7 +1141,7 @@ State 64
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 90
+    math_statement   go to state 91
     function_employ  go to state 27
 
 
@@ -1154,7 +1154,7 @@ State 65
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 91
+    math_statement   go to state 92
     function_employ  go to state 27
 
 
@@ -1167,7 +1167,7 @@ State 66
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 92
+    math_statement   go to state 93
     function_employ  go to state 27
 
 
@@ -1180,7 +1180,7 @@ State 67
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 93
+    math_statement   go to state 94
     function_employ  go to state 27
 
 
@@ -1193,19 +1193,26 @@ State 68
 
 State 69
 
+   11 line: if_statement SEMICOLON .
+
+    $default  reduce using rule 11 (line)
+
+
+State 70
+
    66 switchLines: switchLines '\n' .
 
     $default  reduce using rule 66 (switchLines)
 
 
-State 70
+State 71
 
    24 assign_statement: IDENTIFIER ASSIGN STR_VAL .
 
     $default  reduce using rule 24 (assign_statement)
 
 
-State 71
+State 72
 
    23 assign_statement: IDENTIFIER ASSIGN math_statement .
    32 math_statement: math_statement . ADD math_statement
@@ -1233,14 +1240,14 @@ State 71
     $default  reduce using rule 23 (assign_statement)
 
 
-State 72
+State 73
 
    26 assign_statement: IDENTIFIER ASSIGN bool_statement .
 
     $default  reduce using rule 26 (assign_statement)
 
 
-State 73
+State 74
 
    25 assign_statement: IDENTIFIER ASSIGN function_employ .
    31 math_statement: function_employ .
@@ -1252,7 +1259,7 @@ State 73
     $default   reduce using rule 31 (math_statement)
 
 
-State 74
+State 75
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1276,39 +1283,39 @@ State 74
     ADD  shift, and go to state 65
     MUL  shift, and go to state 66
     DIV  shift, and go to state 67
-    RP   shift, and go to state 94
-
-
-State 75
-
-   54 function_employ: IDENTIFIER LP bool_statement . RP
-
-    RP  shift, and go to state 95
+    RP   shift, and go to state 95
 
 
 State 76
 
-   16 line: PRINT_T LP IDENTIFIER . RP SEMICOLON
+   54 function_employ: IDENTIFIER LP bool_statement . RP
 
     RP  shift, and go to state 96
 
 
 State 77
 
-   51 function_definition: FUNCTION IDENTIFIER LP . TypeForParam IDENTIFIER RP switchLines block
-   52                    | FUNCTION IDENTIFIER LP . RP block
+   16 line: PRINT_T LP IDENTIFIER . RP SEMICOLON
 
-    INT_TYPE     shift, and go to state 97
-    FLOAT_TYPE   shift, and go to state 98
-    DOUBLE_TYPE  shift, and go to state 99
-    BOOL_TYPE    shift, and go to state 100
-    STRING_TYPE  shift, and go to state 101
-    RP           shift, and go to state 102
-
-    TypeForParam  go to state 103
+    RP  shift, and go to state 97
 
 
 State 78
+
+   51 function_definition: FUNCTION IDENTIFIER LP . TypeForParam IDENTIFIER RP switchLines block
+   52                    | FUNCTION IDENTIFIER LP . RP block
+
+    INT_TYPE     shift, and go to state 98
+    FLOAT_TYPE   shift, and go to state 99
+    DOUBLE_TYPE  shift, and go to state 100
+    BOOL_TYPE    shift, and go to state 101
+    STRING_TYPE  shift, and go to state 102
+    RP           shift, and go to state 103
+
+    TypeForParam  go to state 104
+
+
+State 79
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1333,24 +1340,24 @@ State 78
     DIV  shift, and go to state 67
 
 
-State 79
+State 80
 
    57 if_statement: IF LP bool_statement . RP switchLines block
    58             | IF LP bool_statement . RP switchLines block switchLines ELSE switchLines block
    59             | IF LP bool_statement . RP switchLines block switchLines elsif_list
    60             | IF LP bool_statement . RP switchLines block switchLines elsif_list switchLines ELSE switchLines block
 
-    RP  shift, and go to state 104
-
-
-State 80
-
-   64 while_statement: WHILE LP bool_statement . RP switchLines block
-
     RP  shift, and go to state 105
 
 
 State 81
+
+   64 while_statement: WHILE LP bool_statement . RP switchLines block
+
+    RP  shift, and go to state 106
+
+
+State 82
 
    23 assign_statement: IDENTIFIER . ASSIGN math_statement
    24                 | IDENTIFIER . ASSIGN STR_VAL
@@ -1364,21 +1371,21 @@ State 81
     ASSIGN    shift, and go to state 38
 
 
-State 82
+State 83
 
    65 for_statement: FOR LP assign_statement . SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block
 
-    SEMICOLON  shift, and go to state 106
+    SEMICOLON  shift, and go to state 107
 
 
-State 83
+State 84
 
    36 math_statement: LP math_statement RP .
 
     $default  reduce using rule 36 (math_statement)
 
 
-State 84
+State 85
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1395,7 +1402,7 @@ State 84
     $default  reduce using rule 42 (bool_statement)
 
 
-State 85
+State 86
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1412,7 +1419,7 @@ State 85
     $default  reduce using rule 45 (bool_statement)
 
 
-State 86
+State 87
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1429,7 +1436,7 @@ State 86
     $default  reduce using rule 40 (bool_statement)
 
 
-State 87
+State 88
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1446,7 +1453,7 @@ State 87
     $default  reduce using rule 43 (bool_statement)
 
 
-State 88
+State 89
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1463,7 +1470,7 @@ State 88
     $default  reduce using rule 41 (bool_statement)
 
 
-State 89
+State 90
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1480,7 +1487,7 @@ State 89
     $default  reduce using rule 44 (bool_statement)
 
 
-State 90
+State 91
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1494,7 +1501,7 @@ State 90
     $default  reduce using rule 33 (math_statement)
 
 
-State 91
+State 92
 
    32 math_statement: math_statement . ADD math_statement
    32               | math_statement ADD math_statement .
@@ -1508,7 +1515,7 @@ State 91
     $default  reduce using rule 32 (math_statement)
 
 
-State 92
+State 93
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1519,7 +1526,7 @@ State 92
     $default  reduce using rule 34 (math_statement)
 
 
-State 93
+State 94
 
    32 math_statement: math_statement . ADD math_statement
    33               | math_statement . SUB math_statement
@@ -1530,79 +1537,79 @@ State 93
     $default  reduce using rule 35 (math_statement)
 
 
-State 94
+State 95
 
    53 function_employ: IDENTIFIER LP math_statement RP .
 
     $default  reduce using rule 53 (function_employ)
 
 
-State 95
+State 96
 
    54 function_employ: IDENTIFIER LP bool_statement RP .
 
     $default  reduce using rule 54 (function_employ)
 
 
-State 96
+State 97
 
    16 line: PRINT_T LP IDENTIFIER RP . SEMICOLON
 
-    SEMICOLON  shift, and go to state 107
+    SEMICOLON  shift, and go to state 108
 
 
-State 97
+State 98
 
    46 TypeForParam: INT_TYPE .
 
     $default  reduce using rule 46 (TypeForParam)
 
 
-State 98
+State 99
 
    47 TypeForParam: FLOAT_TYPE .
 
     $default  reduce using rule 47 (TypeForParam)
 
 
-State 99
+State 100
 
    48 TypeForParam: DOUBLE_TYPE .
 
     $default  reduce using rule 48 (TypeForParam)
 
 
-State 100
+State 101
 
    49 TypeForParam: BOOL_TYPE .
 
     $default  reduce using rule 49 (TypeForParam)
 
 
-State 101
+State 102
 
    50 TypeForParam: STRING_TYPE .
 
     $default  reduce using rule 50 (TypeForParam)
 
 
-State 102
+State 103
 
    52 function_definition: FUNCTION IDENTIFIER LP RP . block
 
-    LC  shift, and go to state 108
+    LC  shift, and go to state 109
 
-    block  go to state 109
-
-
-State 103
-
-   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam . IDENTIFIER RP switchLines block
-
-    IDENTIFIER  shift, and go to state 110
+    block  go to state 110
 
 
 State 104
+
+   51 function_definition: FUNCTION IDENTIFIER LP TypeForParam . IDENTIFIER RP switchLines block
+
+    IDENTIFIER  shift, and go to state 111
+
+
+State 105
 
    57 if_statement: IF LP bool_statement RP . switchLines block
    58             | IF LP bool_statement RP . switchLines block switchLines ELSE switchLines block
@@ -1614,10 +1621,10 @@ State 104
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 111
+    switchLines  go to state 112
 
 
-State 105
+State 106
 
    64 while_statement: WHILE LP bool_statement RP . switchLines block
 
@@ -1626,10 +1633,10 @@ State 105
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 112
+    switchLines  go to state 113
 
 
-State 106
+State 107
 
    65 for_statement: FOR LP assign_statement SEMICOLON . bool_statement SEMICOLON assign_statement RP switchLines block
 
@@ -1640,19 +1647,19 @@ State 106
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 78
-    bool_statement   go to state 113
+    math_statement   go to state 79
+    bool_statement   go to state 114
     function_employ  go to state 27
 
 
-State 107
+State 108
 
    16 line: PRINT_T LP IDENTIFIER RP SEMICOLON .
 
     $default  reduce using rule 16 (line)
 
 
-State 108
+State 109
 
    69 block: LC . lines RC
    70      | LC . RC
@@ -1668,7 +1675,7 @@ State 108
     RETURN_T     shift, and go to state 10
     BREAK        shift, and go to state 11
     CONTINUE     shift, and go to state 12
-    RC           shift, and go to state 114
+    RC           shift, and go to state 115
     TRUE_T       shift, and go to state 13
     FALSE_T      shift, and go to state 14
     SUB          shift, and go to state 15
@@ -1694,7 +1701,7 @@ State 108
     '\n'         [reduce using rule 68 (switchLines)]
 
     line                go to state 20
-    lines               go to state 115
+    lines               go to state 116
     assign_statement    go to state 23
     math_statement      go to state 24
     bool_statement      go to state 25
@@ -1708,21 +1715,21 @@ State 108
     continue_statement  go to state 34
 
 
-State 109
+State 110
 
    52 function_definition: FUNCTION IDENTIFIER LP RP block .
 
     $default  reduce using rule 52 (function_definition)
 
 
-State 110
+State 111
 
    51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER . RP switchLines block
 
-    RP  shift, and go to state 116
+    RP  shift, and go to state 117
 
 
-State 111
+State 112
 
    57 if_statement: IF LP bool_statement RP switchLines . block
    58             | IF LP bool_statement RP switchLines . block switchLines ELSE switchLines block
@@ -1730,38 +1737,38 @@ State 111
    60             | IF LP bool_statement RP switchLines . block switchLines elsif_list switchLines ELSE switchLines block
    66 switchLines: switchLines . '\n'
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
-
-    block  go to state 117
-
-
-State 112
-
-   64 while_statement: WHILE LP bool_statement RP switchLines . block
-   66 switchLines: switchLines . '\n'
-
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
 
     block  go to state 118
 
 
 State 113
 
-   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement . SEMICOLON assign_statement RP switchLines block
+   64 while_statement: WHILE LP bool_statement RP switchLines . block
+   66 switchLines: switchLines . '\n'
 
-    SEMICOLON  shift, and go to state 119
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
+
+    block  go to state 119
 
 
 State 114
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement . SEMICOLON assign_statement RP switchLines block
+
+    SEMICOLON  shift, and go to state 120
+
+
+State 115
 
    70 block: LC RC .
 
     $default  reduce using rule 70 (block)
 
 
-State 115
+State 116
 
    20 lines: lines . line
    69 block: LC lines . RC
@@ -1777,7 +1784,7 @@ State 115
     RETURN_T     shift, and go to state 10
     BREAK        shift, and go to state 11
     CONTINUE     shift, and go to state 12
-    RC           shift, and go to state 120
+    RC           shift, and go to state 121
     TRUE_T       shift, and go to state 13
     FALSE_T      shift, and go to state 14
     SUB          shift, and go to state 15
@@ -1816,7 +1823,7 @@ State 115
     continue_statement  go to state 34
 
 
-State 116
+State 117
 
    51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP . switchLines block
 
@@ -1825,10 +1832,10 @@ State 116
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 121
+    switchLines  go to state 122
 
 
-State 117
+State 118
 
    57 if_statement: IF LP bool_statement RP switchLines block .
    58             | IF LP bool_statement RP switchLines block . switchLines ELSE switchLines block
@@ -1837,79 +1844,77 @@ State 117
 
     '\n'  shift, and go to state 17
 
-    ELSE      reduce using rule 68 (switchLines)
-    ELSIF     reduce using rule 68 (switchLines)
-    '\n'      [reduce using rule 57 (if_statement)]
-    '\n'      [reduce using rule 68 (switchLines)]
-    $default  reduce using rule 57 (if_statement)
+    SEMICOLON  reduce using rule 57 (if_statement)
+    '\n'       [reduce using rule 68 (switchLines)]
+    $default   reduce using rule 68 (switchLines)
 
-    switchLines  go to state 122
+    switchLines  go to state 123
 
 
-State 118
+State 119
 
    64 while_statement: WHILE LP bool_statement RP switchLines block .
 
     $default  reduce using rule 64 (while_statement)
 
 
-State 119
+State 120
 
    65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON . assign_statement RP switchLines block
 
-    IDENTIFIER  shift, and go to state 81
+    IDENTIFIER  shift, and go to state 82
 
-    assign_statement  go to state 123
+    assign_statement  go to state 124
 
 
-State 120
+State 121
 
    69 block: LC lines RC .
 
     $default  reduce using rule 69 (block)
 
 
-State 121
+State 122
 
    51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines . block
    66 switchLines: switchLines . '\n'
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
 
-    block  go to state 124
+    block  go to state 125
 
 
-State 122
+State 123
 
    58 if_statement: IF LP bool_statement RP switchLines block switchLines . ELSE switchLines block
    59             | IF LP bool_statement RP switchLines block switchLines . elsif_list
    60             | IF LP bool_statement RP switchLines block switchLines . elsif_list switchLines ELSE switchLines block
    66 switchLines: switchLines . '\n'
 
-    ELSE   shift, and go to state 125
-    ELSIF  shift, and go to state 126
-    '\n'   shift, and go to state 69
+    ELSE   shift, and go to state 126
+    ELSIF  shift, and go to state 127
+    '\n'   shift, and go to state 70
 
-    elsif_list  go to state 127
-    elsif       go to state 128
-
-
-State 123
-
-   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement . RP switchLines block
-
-    RP  shift, and go to state 129
+    elsif_list  go to state 128
+    elsif       go to state 129
 
 
 State 124
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement . RP switchLines block
+
+    RP  shift, and go to state 130
+
+
+State 125
 
    51 function_definition: FUNCTION IDENTIFIER LP TypeForParam IDENTIFIER RP switchLines block .
 
     $default  reduce using rule 51 (function_definition)
 
 
-State 125
+State 126
 
    58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE . switchLines block
 
@@ -1918,42 +1923,41 @@ State 125
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 130
-
-
-State 126
-
-   63 elsif: ELSIF . LP bool_statement RP switchLines block switchLines
-
-    LP  shift, and go to state 131
+    switchLines  go to state 131
 
 
 State 127
+
+   63 elsif: ELSIF . LP bool_statement RP switchLines block switchLines
+
+    LP  shift, and go to state 132
+
+
+State 128
 
    59 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list .
    60             | IF LP bool_statement RP switchLines block switchLines elsif_list . switchLines ELSE switchLines block
    62 elsif_list: elsif_list . elsif
 
-    ELSIF  shift, and go to state 126
+    ELSIF  shift, and go to state 127
     '\n'   shift, and go to state 17
 
     ELSE      reduce using rule 68 (switchLines)
-    '\n'      [reduce using rule 59 (if_statement)]
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 59 (if_statement)
 
-    elsif        go to state 132
-    switchLines  go to state 133
+    elsif        go to state 133
+    switchLines  go to state 134
 
 
-State 128
+State 129
 
    61 elsif_list: elsif .
 
     $default  reduce using rule 61 (elsif_list)
 
 
-State 129
+State 130
 
    65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP . switchLines block
 
@@ -1962,21 +1966,21 @@ State 129
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 134
+    switchLines  go to state 135
 
 
-State 130
+State 131
 
    58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE switchLines . block
    66 switchLines: switchLines . '\n'
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
 
-    block  go to state 135
+    block  go to state 136
 
 
-State 131
+State 132
 
    63 elsif: ELSIF LP . bool_statement RP switchLines block switchLines
 
@@ -1987,74 +1991,55 @@ State 131
     SUB         shift, and go to state 15
     LP          shift, and go to state 16
 
-    math_statement   go to state 78
-    bool_statement   go to state 136
+    math_statement   go to state 79
+    bool_statement   go to state 137
     function_employ  go to state 27
 
 
-State 132
+State 133
 
    62 elsif_list: elsif_list elsif .
 
     $default  reduce using rule 62 (elsif_list)
 
 
-State 133
+State 134
 
    60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines . ELSE switchLines block
    66 switchLines: switchLines . '\n'
 
-    ELSE  shift, and go to state 137
-    '\n'  shift, and go to state 69
+    ELSE  shift, and go to state 138
+    '\n'  shift, and go to state 70
 
 
-State 134
+State 135
 
    65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines . block
    66 switchLines: switchLines . '\n'
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
 
-    block  go to state 138
+    block  go to state 139
 
 
-State 135
+State 136
 
    58 if_statement: IF LP bool_statement RP switchLines block switchLines ELSE switchLines block .
 
     $default  reduce using rule 58 (if_statement)
 
 
-State 136
+State 137
 
    63 elsif: ELSIF LP bool_statement . RP switchLines block switchLines
 
-    RP  shift, and go to state 139
-
-
-State 137
-
-   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE . switchLines block
-
-    '\n'  shift, and go to state 17
-
-    '\n'      [reduce using rule 68 (switchLines)]
-    $default  reduce using rule 68 (switchLines)
-
-    switchLines  go to state 140
+    RP  shift, and go to state 140
 
 
 State 138
 
-   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block .
-
-    $default  reduce using rule 65 (for_statement)
-
-
-State 139
-
-   63 elsif: ELSIF LP bool_statement RP . switchLines block switchLines
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE . switchLines block
 
     '\n'  shift, and go to state 17
 
@@ -2064,36 +2049,55 @@ State 139
     switchLines  go to state 141
 
 
+State 139
+
+   65 for_statement: FOR LP assign_statement SEMICOLON bool_statement SEMICOLON assign_statement RP switchLines block .
+
+    $default  reduce using rule 65 (for_statement)
+
+
 State 140
 
-   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines . block
-   66 switchLines: switchLines . '\n'
+   63 elsif: ELSIF LP bool_statement RP . switchLines block switchLines
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    '\n'  shift, and go to state 17
 
-    block  go to state 142
+    '\n'      [reduce using rule 68 (switchLines)]
+    $default  reduce using rule 68 (switchLines)
+
+    switchLines  go to state 142
 
 
 State 141
 
-   63 elsif: ELSIF LP bool_statement RP switchLines . block switchLines
+   60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines . block
    66 switchLines: switchLines . '\n'
 
-    LC    shift, and go to state 108
-    '\n'  shift, and go to state 69
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
 
     block  go to state 143
 
 
 State 142
 
+   63 elsif: ELSIF LP bool_statement RP switchLines . block switchLines
+   66 switchLines: switchLines . '\n'
+
+    LC    shift, and go to state 109
+    '\n'  shift, and go to state 70
+
+    block  go to state 144
+
+
+State 143
+
    60 if_statement: IF LP bool_statement RP switchLines block switchLines elsif_list switchLines ELSE switchLines block .
 
     $default  reduce using rule 60 (if_statement)
 
 
-State 143
+State 144
 
    63 elsif: ELSIF LP bool_statement RP switchLines block . switchLines
 
@@ -2102,15 +2106,15 @@ State 143
     '\n'      [reduce using rule 68 (switchLines)]
     $default  reduce using rule 68 (switchLines)
 
-    switchLines  go to state 144
+    switchLines  go to state 145
 
 
-State 144
+State 145
 
    63 elsif: ELSIF LP bool_statement RP switchLines block switchLines .
    66 switchLines: switchLines . '\n'
 
-    '\n'  shift, and go to state 69
+    '\n'  shift, and go to state 70
 
     '\n'      [reduce using rule 63 (elsif)]
     $default  reduce using rule 63 (elsif)

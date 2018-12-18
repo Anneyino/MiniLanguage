@@ -179,7 +179,7 @@ statement_list: statement_list lines
 	;
 	
 line: switchLines{
-		TemplateNode* switch_lines_node = new TemplateNode("newline");
+		TemplateNode* switch_lines_node = new TemplateNode("\\n");
 		$$ = switch_lines_node;
 		//$$ = nullptr;
 }
@@ -224,7 +224,7 @@ line: switchLines{
 		TemplateNode* while_statement_node = $1;
 		$$ = while_statement_node;
 	}
-	| if_statement  {
+	| if_statement SEMICOLON {
 	cout<<"Óï·¨½á¹¹: ifÅÐ¶Ï"<<endl;
 	cout<<""<<endl;
 	}
@@ -260,7 +260,7 @@ line: switchLines{
 	$$ = return_node;
 	}
 	| HELLO	{ pParseTree->SayHello("I am a parser!");}
-	| error '\n'	{ IsProgramCorrect = false;yyerrok; }
+	| error '\n'	{ lineNumber++;IsProgramCorrect = false;yyerrok; }
 	; 
 
 	lines : line {
@@ -306,6 +306,8 @@ line: switchLines{
 assign_statement: IDENTIFIER ASSIGN math_statement	{ 
 		auto pAssign = pParseTree->getPAssign();
 		$$ = pAssign->makeAssign($1, $3->value);
+
+
 }      | IDENTIFIER ASSIGN STR_VAL{
         auto pAssign = pParseTree->getPAssign();
 		$$ = pAssign->makeAssign($1, $3);

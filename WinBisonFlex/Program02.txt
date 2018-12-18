@@ -1,4 +1,5 @@
 a = 1;
+b = 2
 str = "helloworld";
 while(a!=0){
 a--;
@@ -21,4 +22,4 @@ return a;
                            a = b-a;
                            }else{
                            a = 0;
-                           }
+                           };
